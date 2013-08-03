@@ -1,0 +1,5 @@
+/opt/viz/drivers/nvidia/
+
+change script
+add driver
+check authority (chmod 755)

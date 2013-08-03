@@ -1,0 +1,52 @@
+Version 5.0:
+
+when changing resolutions rocks does not rewrite the ~/.dmxrc file
+$ rocks list dmx layout > ~/.dmxrc
+
+
+
+BIG DEAL!!!!
+
+It looks like you are running as root.  This won't work, so you'll
+need to create a normal user account to run from there.
+
+# useradd demo
+# passwd demo
+# rocks sync users
+
+Then login as demo.
+
+
+500 and 503
+
+
+
+startkde - script for kde windows manager
+
+<post>
+mv /runonce/reconfigx /etc/init.d/reconfigx
+chmod 755 /etc/init.d/reconfigx
+chkconfig --add reconfigx
+sed s/5/3/ < /etc/inittab > /var/tmp/inittab
+mv /var/tmp/inittab /etc/inittab -f
+</post>
+
+/runonce/reconfigx
+#chkconfig: 3 90 10
+#description: runonce script to install nvidia and configure x.org
+/runonce/nvidia-driver --no-network -s > /dev/null
+X -configure
+mv /root/xorg.conf.new /root/xorg.conf
+sed s/RightOf/Above/ < /root/xorg.conf > /var/tmp/xorg.conf
+mv /var/tmp/xorg.conf /root/xorg.conf -f
+sed s/nv/nvidia/ < /root/xorg.conf > /var/tmp/xorg.conf
+mv /var/tmp/xorg.conf /root/xorg.conf -f
+echo "Section \"ServerFlags\"" >> /root/xorg.conf
+echo "Option \"Xinerama\" \"true\"" >> /root/xorg.conf
+echo "EndSection" >> /root/xorg.conf
+mv /root/xorg.conf /etc/X11/xorg.conf -f
+chkconfig --del reconfigx
+sed s/3/5/ < /etc/inittab > /var/tmp/inittab
+mv /var/tmp/inittab /etc/inittab -f
+rm /etc/init.d/reconfigx -f
+init 5

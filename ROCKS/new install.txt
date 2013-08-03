@@ -1,0 +1,32 @@
+install front-end
+
+open terminal for ssh keygen
+
+install nvidia driver
+
+insert-ethers -> tile -> boot machines
+
+commands:
+mkdir /runonce/
+(move reconfigx script here and nvidia driver -> rename nvidia driver nvidia-driver)
+cd /runonce/
+chmod 755 *
+cd /var/411/
+vi Files.mk -> add to FILES_NOCOMMENT (this shares those files)
+make clean
+make
+rocks sync users (this might be needed anytime the files are changed???)
+
+(Notes on next few steps: http://www.rocksclusters.org/roll-documentation/base/5.0/customization-postconfig.html)
+
+cp extend-tile.xml /home/install/site-profiles/5.0/nodes/ (go to Aaron's Files)
+cd /home/install/
+rocks-dist dist
+rocks set host pxeboot tile% action=install
+
+(this is where I ran into issues...)
+rocks set host pxeboot tile% action=os
+
+http://www.rocksclusters.org/roll-documentation/viz/5.0/x171.html
+
+(NOte: if viz config changed user needs to run "rocks list dmx layout > ~/.dmxrc")

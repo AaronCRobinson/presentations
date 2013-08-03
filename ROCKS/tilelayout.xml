@@ -1,0 +1,16 @@
+<wall>
+
+	<!-- edit the following line -->
+	<defaults card="1" hres="1280" vres="3072" hborder="100" vborder="80"/>
+
+	<col>
+		<display host="tile-0-0"/>
+	</col>
+	<col>
+		<display host="tile-0-1"/>
+	</col>
+	<col>
+		<display host="tile-0-2"/>
+	</col>
+
+</wall>

@@ -1,0 +1,19 @@
+#chkconfig: 3 99 1
+#description: runonce script to install nvidia and configure x.org
+/runonce/nvidia-driver --no-network -s > /dev/null
+HOME=/root
+X -configure
+mv /root/xorg.conf.new /root/xorg.conf
+sed s/RightOf/Above/ < /root/xorg.conf > /var/tmp/xorg.conf
+mv /var/tmp/xorg.conf /root/xorg.conf -f
+sed s/"nv"/"nvidia"/ < /root/xorg.conf > /var/tmp/xorg.conf
+mv /var/tmp/xorg.conf /root/xorg.conf -f
+echo "Section \"ServerFlags\"" >> /root/xorg.conf
+echo "Option \"Xinerama\" \"true\"" >> /root/xorg.conf
+echo "EndSection" >> /root/xorg.conf
+mv /root/xorg.conf /etc/X11/xorg.conf -f
+chkconfig --del reconfigx
+sed s/id:3:initdefault:/id:5:initdefault:/ < /etc/inittab > /var/tmp/inittab
+mv /var/tmp/inittab /etc/inittab -f
+rm /etc/init.d/reconfigx -f
+init 5
